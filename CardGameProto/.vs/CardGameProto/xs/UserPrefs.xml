@@ -1,0 +1,29 @@
+﻿<Properties StartupConfiguration="{CB457C8F-3531-C9AC-DB40-A94F167D779B}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TriumphLogic.cs">
+    <Files>
+      <File FileName="Assets/Scripts/TriumphLogic.cs" Line="87" Column="28" />
+      <File FileName="Assets/Scripts/UpdateSprite.cs" Line="30" Column="11" />
+      <File FileName="Assets/Scripts/Selectable.cs" Line="5" Column="20" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="CardGameProto" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="TriumphLogic.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="53347364-ea02-4481-97f6-2f742a19fe9e" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
