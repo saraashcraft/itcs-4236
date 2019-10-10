@@ -21,9 +21,22 @@ public class TriumphLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        userSelection();
     }
 
+    void userSelection()
+    {
+        if (Input.GetMouseButtonDown(0)) {
+            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+            if (Physics.Raycast(ray, out hit, 100)) {
+                if (hit.collider.tag == "Trigger") {
+                    Debug.Log("---> Hit: ");
+                }
+            }
+        }
+    }
 
     public void PlayCards() {
         deck = GenerateDeck();
@@ -75,7 +88,7 @@ public class TriumphLogic : MonoBehaviour
 
             if (drawFour < 4)
             {
-                newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z), Quaternion.identity);
+                newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z + 1000), Quaternion.identity);
                 newCard.name = card;
 
 
@@ -87,7 +100,7 @@ public class TriumphLogic : MonoBehaviour
                 xOffset = 0f;
                 yOffset = -2.5f;
 
-                newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z), Quaternion.identity);
+                newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z +1000), Quaternion.identity);
                 newCard.name = card;
 
                 
