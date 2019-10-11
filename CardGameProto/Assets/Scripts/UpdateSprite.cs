@@ -10,6 +10,8 @@ public class UpdateSprite : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Select select;
     private TriumphLogic triumphLogic;
+    [SerializeField] private Transform cardTrans;
+    private bool selected = false;
 
 
     // Start is called before the first frame update
@@ -39,6 +41,29 @@ public class UpdateSprite : MonoBehaviour
         }
         else {
             spriteRenderer.sprite = cardBack; 
+        }
+    }
+
+    public void OnMouseDown()
+    {
+        if (select.faceUp)
+        {
+            // If an unselected card in the hand has been selected, set boolean value and raise the card
+            if (!selected)
+            {
+                selected = true;
+                cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
+            }
+            // If a selected card is reselected, the card is played
+            else
+            {
+                
+            }
+        }
+        else
+        {
+            // If the card on the top of the deck has been selected and there are less than 4 cards in the hand, add it to the hand
+            
         }
     }
 }
