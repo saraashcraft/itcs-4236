@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TriumphLogic : MonoBehaviour
 {
+    //TODO: make a Card object and a Card[] array s.t. you can get the 
+
     public Sprite[] cardFaces;
     public GameObject cardPrefab;
 	public GameObject opponentPrefab; //for the opponent's cards
@@ -15,7 +17,11 @@ public class TriumphLogic : MonoBehaviour
 	public List<string> opponentDeck;
 
 	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
-	private double[] playerCardValues = new double[2]; //parallel array that holds the values of the cards - couldn't access values.
+	private double[] playerCardValues = new double[2]; //parallel array that holds the values of the cards - couldn't access values. because the player choses their values, they only need an array of 2
+
+	private GameObject[] opponentCards = new GameObject[4];
+	private double[] opponentCardValues = new double[4];
+	private double opponentBestValue;
 
 	private double playerHandResult; 
 
@@ -52,6 +58,16 @@ public class TriumphLogic : MonoBehaviour
 			twoCardLimit += 1;
 		}
 	}
+
+	//int fourCardLimit = 0; 
+	//public void setOpponentCards(GameObject card, double cardValue) {
+	//	if (fourCardLimit < 4) {
+	//		opponentCards[fourCardLimit] = card;
+	//		opponentCardValues[fourCardLimit] = cardValue;
+
+	//		fourCardLimit += 1; 
+	//	}
+	//}
 
 	public bool isSelectable() {
 		if (twoCardLimit >= 2)
@@ -145,12 +161,12 @@ public class TriumphLogic : MonoBehaviour
 		Vector3 originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 		int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck.
 
-
-		foreach (string card in deck)
+		foreach (string card in opponentDeck)
 		{
 			//this makes it in a row.
 			GameObject newCard;
 
+			OpponentSelect opponentSelect = GetComponent<OpponentSelect>();
 
 			if (drawFour < 4)
 			{
@@ -159,21 +175,65 @@ public class TriumphLogic : MonoBehaviour
 
 				newCard.GetComponent<OpponentSelect>().faceUp = true; //set to false for the opponent so the player can't see the cards. set to true to debug
 				xOffset += 2f;
+
+				opponentCards[drawFour] = newCard;
+				//	opponentCardValues[drawFour] = opponentSelect.separateSuitAndValue(newCard.name[1]);
+
+				opponentCardValues[drawFour] = returnCardValue(newCard.name[1]);
+				///	print("card val: " + opponentCardValues[drawFour]);
+				//	print(opponentCardValues[drawFour]);
+
 				drawFour++;
 			}
 			else
 			{
-                //offsets used to get the deck to the upper right corner of the screen
+				//offsets used to get the deck to the upper right corner of the screen
 				xOffset = 14f;
 				yOffset = 11f;
 
 				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
 				newCard.name = card;
 
-
 				newCard.GetComponent<OpponentSelect>().faceUp = false;
+
+			}
+
+			if (drawFour == 4) {
+				print("CHECK?");
 			}
 		}
+	}
+
+	/*
+        This shouldn't be used and 100% should be cut once I implement a Card Object w inherent values. Sorry, Walker. 
+     */
+
+	double returnCardValue(char value) {
+		double tempValue;
+
+
+		if (value == 'J')
+		{
+			tempValue = 11;
+		}
+		else if (value == 'Q')
+		{
+			tempValue = 12;
+		}
+		else if (value == 'K')
+		{
+			tempValue = 13;
+		}
+		else if (value == 'A')
+		{
+			tempValue = 1;
+		}
+		else
+		{
+			tempValue = char.GetNumericValue(value);
+		}
+
+		return tempValue;
 
 	}
 }

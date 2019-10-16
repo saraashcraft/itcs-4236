@@ -17,37 +17,38 @@ public class OpponentSelect : MonoBehaviour
 	{
 		opSelect = GetComponent<OpponentSelect>();
 
-		separateSuitAndValue();
+		value = separateSuitAndValue(opSelect.name[1]);
 
 	}
 
-	void separateSuitAndValue()
+	public double separateSuitAndValue(char value)
 	{
 		string tempName = opSelect.name;
+		double tempValue;
 
-		suit = tempName[0];
 
-		if (tempName[1] == 'J')
+		if (value == 'J')
 		{
-			value = 11;
+			tempValue = 11;
 		}
-		else if (tempName[1] == 'Q')
+		else if (value == 'Q')
 		{
-			value = 12;
+			tempValue = 12;
 		}
-		else if (tempName[1] == 'K')
+		else if (value == 'K')
 		{
-			value = 13;
+			tempValue = 13;
 		}
-		else if (tempName[1] == 'A')
+		else if (value == 'A')
 		{
-			value = 1;
+			tempValue = 1;
 		}
 		else
 		{
-			value = char.GetNumericValue(tempName[1]);
+			tempValue = char.GetNumericValue(tempName[1]);
 		}
 
+		return tempValue;
 	}
 
 	// Update is called once per frame
