@@ -8,10 +8,14 @@ public class UpdateSprite : MonoBehaviour
     public Sprite cardBack;
 
     private SpriteRenderer spriteRenderer;
+
     private Select select;
+	private OpponentSelect opponentSelect;
+
     private TriumphLogic triumphLogic;
     [SerializeField] private Transform cardTrans;
-	[SerializeField] public GameObject card; 
+	[SerializeField] public GameObject card;
+
     private bool selected = false;
 
 
@@ -29,21 +33,26 @@ public class UpdateSprite : MonoBehaviour
             }
             i++; 
         }
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        select = GetComponent<Select>(); 
+        spriteRenderer = card.GetComponent<SpriteRenderer>();
+        select = GetComponent<Select>();
+		opponentSelect = GetComponent<OpponentSelect>(); 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (select.faceUp == true)
-        {
-            spriteRenderer.sprite = cardFace;
-        }
-        else {
-            spriteRenderer.sprite = cardBack; 
-        }
-    }
+		if (select.faceUp == true)
+		{
+			spriteRenderer.sprite = cardFace;
+		}
+		else if (opponentSelect.faceUp == true) {
+			spriteRenderer.sprite = cardFace;
+		}
+		else
+		{
+			spriteRenderer.sprite = cardBack;
+		}
+	}
 
     public void OnMouseDown()
     {
@@ -57,7 +66,6 @@ public class UpdateSprite : MonoBehaviour
                 cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
 				triumphLogic.setPlayerCards(card);
 
-				print(select.value);
             }
             // If a selected card is reselected, the card is played
             else

@@ -6,11 +6,13 @@ public class TriumphLogic : MonoBehaviour
 {
     public Sprite[] cardFaces;
     public GameObject cardPrefab;
+	public GameObject opponentPrefab; //for the opponent's cards
 
     public static string[] suits = new string[] { "C", "D", "H", "S" };
     public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
     public List<string> deck;
+	public List<string> opponentDeck;
 
 	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
 
@@ -47,11 +49,17 @@ public class TriumphLogic : MonoBehaviour
 		}
 	}
 
+    /**
+     * Main method where most functions will be called - creates/shuffles deck for both player and opponent
+     */
     public void PlayCards() {
         deck = GenerateDeck();
-        Shuffle(deck);
+		Shuffle(deck);
+		opponentDeck = GenerateDeck(); 
+		Shuffle(opponentDeck);
 
-        DealCards();
+        DealCardsPlayer();
+		DealCardsOpponent(); 
     }
 
     public static List<string> GenerateDeck() {
@@ -78,7 +86,7 @@ public class TriumphLogic : MonoBehaviour
         }
     }
 
-    void DealCards() {
+    void DealCardsPlayer() {
         //used to offset the dealt cards
         float xOffset = 6f;
         float yOffset = -2.5f;
@@ -113,4 +121,44 @@ public class TriumphLogic : MonoBehaviour
             }
         }
     }
+
+	void DealCardsOpponent() {
+		//used to offset the dealt cards
+		float xOffset = 2f;
+		float yOffset = 10f;
+
+		Vector3 originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
+		int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck.
+
+
+		foreach (string card in deck)
+		{
+			//this makes it in a row.
+			GameObject newCard;
+
+
+			if (drawFour < 4)
+			{
+				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
+				newCard.name = card;
+
+				newCard.GetComponent<OpponentSelect>().faceUp = true; //set to false for the opponent so the player can't see the cards. set to true to debug
+				xOffset += 2f;
+				drawFour++;
+			}
+			else
+			{
+                //offsets used to get the deck to the upper right corner of the screen
+				xOffset = 14f;
+				yOffset = 11f;
+
+				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
+				newCard.name = card;
+
+
+				newCard.GetComponent<OpponentSelect>().faceUp = false;
+			}
+		}
+
+	}
 }
