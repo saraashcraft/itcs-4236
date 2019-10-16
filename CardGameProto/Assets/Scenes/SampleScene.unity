@@ -189,7 +189,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardFace: {fileID: 0}
   cardBack: {fileID: 21300000, guid: d243c762acccc4addab0b5317798a15f, type: 3}
-  cardTrans: {fileID: 150662581}
+  cardTrans: {fileID: 150662582}
+  card: {fileID: 150662577}
 --- !u!114 &150662580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,13 +204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   faceUp: 0
---- !u!4 &150662581 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8470725771464214620, guid: 4203522c23a5d41e2bbec5c105d32897,
-    type: 3}
-  m_PrefabInstance: {fileID: 8470725771586299375}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &150662582
+  combinedValue: 0
+--- !u!61 &150662581
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -235,6 +231,12 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 4.62, y: 7.46}
   m_EdgeRadius: 0
+--- !u!4 &150662582 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8470725771464214620, guid: 4203522c23a5d41e2bbec5c105d32897,
+    type: 3}
+  m_PrefabInstance: {fileID: 8470725771586299375}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &201766519
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +847,7 @@ PrefabInstance:
     - target: {fileID: 8470725771464214620, guid: 4203522c23a5d41e2bbec5c105d32897,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -960.778
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8470725771464214620, guid: 4203522c23a5d41e2bbec5c105d32897,
         type: 3}

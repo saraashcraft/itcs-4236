@@ -1,26 +1,15 @@
 ﻿<Properties StartupConfiguration="{CB457C8F-3531-C9AC-DB40-A94F167D779B}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/TriumphLogic.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/UpdateSprite.cs">
     <Files>
-      <File FileName="Assets/Scripts/TriumphLogic.cs" Line="46" Column="10" />
-      <File FileName="Assets/Scripts/UpdateSprite.cs" Line="30" Column="11" />
+      <File FileName="Assets/Scripts/TriumphLogic.cs" Line="26" Column="99" />
+      <File FileName="Assets/Scripts/UpdateSprite.cs" Line="13" Column="12" />
+      <File FileName="Assets/Scripts/Select.cs" Line="1" Column="1" />
+      <File FileName="../../KinematicArrive/Assets/KinematicArriveMovement.cs" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="CardGameProto" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="TriumphLogic.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7b472e8f-e6f3-4ff3-8a5f-2402154e2258" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="7ec75b67-1d9d-4c97-8f9f-3917a42af8f1" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

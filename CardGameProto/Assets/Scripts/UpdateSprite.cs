@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class UpdateSprite : MonoBehaviour
-{
+{ 
     public Sprite cardFace;
     public Sprite cardBack;
 
@@ -11,6 +11,7 @@ public class UpdateSprite : MonoBehaviour
     private Select select;
     private TriumphLogic triumphLogic;
     [SerializeField] private Transform cardTrans;
+	[SerializeField] public GameObject card; 
     private bool selected = false;
 
 
@@ -49,10 +50,13 @@ public class UpdateSprite : MonoBehaviour
         if (select.faceUp)
         {
             // If an unselected card in the hand has been selected, set boolean value and raise the card
-            if (!selected)
+            //isSelectable makes sure there are only ever 2 cards raised
+            if (!selected &&triumphLogic.isSelectable())
             {
                 selected = true;
                 cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
+				triumphLogic.setPlayerCards(card);
+				print(card);
             }
             // If a selected card is reselected, the card is played
             else

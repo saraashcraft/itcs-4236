@@ -5,12 +5,14 @@ using UnityEngine;
 public class TriumphLogic : MonoBehaviour
 {
     public Sprite[] cardFaces;
-    public GameObject cardPrefab; 
+    public GameObject cardPrefab;
 
     public static string[] suits = new string[] { "C", "D", "H", "S" };
     public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
     public List<string> deck;
+
+	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
 
     // Start is called before the first frame update
     void Start()
@@ -21,29 +23,33 @@ public class TriumphLogic : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        userSelection();
+
     }
 
-    void userSelection()
-    {
-        if (Input.GetMouseButtonDown(0)) {
-            var ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+	int twoCardLimit = 0;
 
-            if (Physics.Raycast(ray, out hit, 100)) {
-                if (hit.collider.tag == "Trigger") {
-                    Debug.Log("---> Hit: ");
-                }
-            }
-        }
-    }
+	public void setPlayerCards(GameObject card) {
+		
+		if (twoCardLimit < 2)
+		{
+			playerCards[twoCardLimit] = card;
+			twoCardLimit += 1;
+		}
+	}
+
+	public bool isSelectable() {
+		if (twoCardLimit >= 2)
+		{
+			return false;
+		}
+		else {
+			return true; 
+		}
+	}
 
     public void PlayCards() {
         deck = GenerateDeck();
-        Shuffle(deck); 
-        foreach (string card in deck) {
-            print(card);
-        }
+        Shuffle(deck);
 
         DealCards();
     }
@@ -68,29 +74,28 @@ public class TriumphLogic : MonoBehaviour
 
             T temp = list[k];
             list[k] = list[n];
-            list[n] = temp; 
+            list[n] = temp;
         }
     }
 
     void DealCards() {
         //used to offset the dealt cards
-        float xOffset = 6f; 
+        float xOffset = 6f;
         float yOffset = -2.5f;
 
         Vector3 originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck. 
+        int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck.
 
 
         foreach (string card in deck) {
-            //this makes it in a row. 
+            //this makes it in a row.
             GameObject newCard;
-            
+
 
             if (drawFour < 4)
             {
                 newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z + 1000), Quaternion.identity);
                 newCard.name = card;
-
 
                 newCard.GetComponent<Select>().faceUp = true;
                 xOffset += 2f;
@@ -103,7 +108,7 @@ public class TriumphLogic : MonoBehaviour
                 newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z +1000), Quaternion.identity);
                 newCard.name = card;
 
-                
+
                 newCard.GetComponent<Select>().faceUp = false;
             }
         }
