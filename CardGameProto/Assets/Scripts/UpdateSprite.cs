@@ -56,7 +56,8 @@ public class UpdateSprite : MonoBehaviour
                 selected = true;
                 cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
 				triumphLogic.setPlayerCards(card);
-				print(card);
+
+				print(select.value);
             }
             // If a selected card is reselected, the card is played
             else
