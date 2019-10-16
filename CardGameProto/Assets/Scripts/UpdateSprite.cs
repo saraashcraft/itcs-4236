@@ -17,7 +17,7 @@ public class UpdateSprite : MonoBehaviour
 	[SerializeField] public GameObject card;
 
     private bool selected = false;
-
+	public double cardValue; 
 
     // Start is called before the first frame update
     void Start()
@@ -64,7 +64,8 @@ public class UpdateSprite : MonoBehaviour
             {
                 selected = true;
                 cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
-				triumphLogic.setPlayerCards(card);
+				cardValue = select.value; 
+				triumphLogic.setPlayerCards(card, cardValue);
 
             }
             // If a selected card is reselected, the card is played

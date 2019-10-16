@@ -15,6 +15,9 @@ public class TriumphLogic : MonoBehaviour
 	public List<string> opponentDeck;
 
 	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
+	private double[] playerCardValues = new double[2]; //parallel array that holds the values of the cards - couldn't access values.
+
+	private double playerHandResult; 
 
     // Start is called before the first frame update
     void Start()
@@ -23,18 +26,29 @@ public class TriumphLogic : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
+		if (playerCards[0] != null && playerCards[1] != null)
+		{
+			playerHandResult = playerCardValues[0] + playerCardValues[1];
+			print("Cards in play: " + playerCardValues[0] + " " + playerCardValues[1]);
+		}
+		else
+		{
+			print("Nothing set");
+		}
 
-    }
+	}
 
 	int twoCardLimit = 0;
 
-	public void setPlayerCards(GameObject card) {
+	public void setPlayerCards(GameObject card, double cardValue) {
 		
 		if (twoCardLimit < 2)
 		{
 			playerCards[twoCardLimit] = card;
+			playerCardValues[twoCardLimit] = cardValue;
+
 			twoCardLimit += 1;
 		}
 	}
@@ -59,7 +73,8 @@ public class TriumphLogic : MonoBehaviour
 		Shuffle(opponentDeck);
 
         DealCardsPlayer();
-		DealCardsOpponent(); 
+		DealCardsOpponent();
+
     }
 
     public static List<string> GenerateDeck() {
