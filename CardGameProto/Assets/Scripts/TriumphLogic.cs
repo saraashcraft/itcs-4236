@@ -21,9 +21,11 @@ public class TriumphLogic : MonoBehaviour
 
 	private GameObject[] opponentCards = new GameObject[4];
 	private double[] opponentCardValues = new double[4];
+	private int firstBestOpponentCardPosition, secondBestOpponentCardPosition; //positions of the best cards in opponents current hand
 	private double opponentBestValue;
 
-	private double playerHandResult; 
+	private double playerHandResult;
+
 
     // Start is called before the first frame update
     void Start()
@@ -91,6 +93,21 @@ public class TriumphLogic : MonoBehaviour
         DealCardsPlayer();
 		DealCardsOpponent();
 
+		opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
+		print(opponentBestValue);
+
+			if (playerHandResult > opponentBestValue)
+			{
+				print("Player wins");
+			}
+			else if (opponentBestValue > playerHandResult)
+			{
+				print("Opponent wins");
+			}
+			else {
+				print("tie btwn " + opponentBestValue + "and player " + playerHandResult);
+			}
+		
     }
 
     public static List<string> GenerateDeck() {
@@ -179,8 +196,8 @@ public class TriumphLogic : MonoBehaviour
 				opponentCards[drawFour] = newCard;
 				//	opponentCardValues[drawFour] = opponentSelect.separateSuitAndValue(newCard.name[1]);
 
-				opponentCardValues[drawFour] = returnCardValue(newCard.name[1]);
-				///	print("card val: " + opponentCardValues[drawFour]);
+				opponentCardValues[drawFour] = returnCardValue(newCard.name);
+					//print("card val: " + opponentCardValues[drawFour]);
 				//	print(opponentCardValues[drawFour]);
 
 				drawFour++;
@@ -199,38 +216,74 @@ public class TriumphLogic : MonoBehaviour
 			}
 
 			if (drawFour == 4) {
-				print("CHECK?");
+				bestValue(); 
 			}
 		}
 	}
 
 	/*
-        This shouldn't be used and 100% should be cut once I implement a Card Object w inherent values. Sorry, Walker. 
-     */
+    Short decision-making function to decide for which cards the AI will play
+         */
+	void bestValue() {
+		double firstBestValue = opponentCardValues[0];
+		double secondBestValue = -1;
 
-	double returnCardValue(char value) {
+		int firstValLocation = 0;
+		int secondValLocation = 0 ;
+
+		for (int i = 0; i < 4; i++) {
+			if (opponentCardValues[i] > firstBestValue) {
+				firstBestValue = opponentCardValues[i];
+				firstValLocation = i; 
+			}
+		}
+
+		for (int i = 0; i < 4; i++) {
+			if (i != firstValLocation) {
+				if (opponentCardValues[i] > secondBestValue) {
+					secondBestValue = opponentCardValues[i];
+					secondValLocation = i; 
+				}
+			}
+		}
+
+		print("Highest card is at " + opponentCards[firstValLocation] + " and second highest is " + opponentCards[secondValLocation]);
+		firstBestOpponentCardPosition = firstValLocation;
+		secondBestOpponentCardPosition = secondValLocation; 
+	}
+
+	/*
+        This shouldn't be used and 100% should be cut once I implement a Card Object w inherent values. Sorry, Walker. 
+        Has to use parameter string because value[0] for 10 is '1'
+         * */
+
+	double returnCardValue(string value) {
+		char charValue = value[1];
 		double tempValue;
 
 
-		if (value == 'J')
+		if (charValue == 'J')
 		{
 			tempValue = 11;
 		}
-		else if (value == 'Q')
+		else if (charValue == 'Q')
 		{
 			tempValue = 12;
 		}
-		else if (value == 'K')
+		else if (charValue == 'K')
 		{
 			tempValue = 13;
 		}
-		else if (value == 'A')
+		else if (charValue == 'A')
 		{
 			tempValue = 1;
 		}
+		else if ((value[1] == '1' )&& (value[2] == '0')) {
+			tempValue = 10;
+		}
 		else
 		{
-			tempValue = char.GetNumericValue(value);
+			tempValue = char.GetNumericValue(charValue);
 		}
 
 		return tempValue;
