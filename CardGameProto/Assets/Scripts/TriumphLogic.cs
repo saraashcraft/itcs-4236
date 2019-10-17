@@ -54,6 +54,9 @@ public class TriumphLogic : MonoBehaviour
 
 		if (playerHandResult != -1)
 		{
+			opponentCards[firstBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
+			opponentCards[secondBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
+
 			if (playerHandResult > opponentBestValue)
 			{
 				score.text = "Player: "+ playerHandResult + "\nOpponent: " + opponentBestValue + "\nPlayer wins";
@@ -106,12 +109,10 @@ public class TriumphLogic : MonoBehaviour
 		DealCardsOpponent();
 
 		opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
-		print(opponentBestValue);
 
-		
-    }
+	}
 
-    public static List<string> GenerateDeck() {
+	public static List<string> GenerateDeck() {
         List<string> newDeck = new List<string>();
         foreach (string s in suits) {
             foreach (string v in values) {
@@ -191,7 +192,7 @@ public class TriumphLogic : MonoBehaviour
 				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
 				newCard.name = card;
 
-				newCard.GetComponent<OpponentSelect>().faceUp = true; //set to false for the opponent so the player can't see the cards. set to true to debug
+				newCard.GetComponent<OpponentSelect>().faceUp = false; //set to false for the opponent so the player can't see the cards. set to true to debug
 				xOffset += 2f;
 
 				opponentCards[drawFour] = newCard;
