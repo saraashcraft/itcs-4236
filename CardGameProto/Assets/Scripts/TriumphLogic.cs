@@ -1,10 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TriumphLogic : MonoBehaviour
 {
-    //TODO: make a Card object and a Card[] array s.t. you can get the 
+	//TODO: make a Card object and a Card[] array s.t. you can get the 
+
+	public Text score;
 
     public Sprite[] cardFaces;
     public GameObject cardPrefab;
@@ -24,14 +27,16 @@ public class TriumphLogic : MonoBehaviour
 	private int firstBestOpponentCardPosition, secondBestOpponentCardPosition; //positions of the best cards in opponents current hand
 	private double opponentBestValue;
 
-	private double playerHandResult;
+	private double playerHandResult = -1; //initialized to -1 until it gets real values
 
 
     // Start is called before the first frame update
     void Start()
     {
         PlayCards();
-    }
+
+		
+	}
 
     // Update is called once per frame
     void FixedUpdate()
@@ -46,6 +51,22 @@ public class TriumphLogic : MonoBehaviour
 			print("Nothing set");
 		}
 
+
+		if (playerHandResult != -1)
+		{
+			if (playerHandResult > opponentBestValue)
+			{
+				score.text = "Player: "+ playerHandResult + "\nOpponent: " + opponentBestValue + "\nPlayer wins";
+			}
+			else if (opponentBestValue > playerHandResult)
+			{
+				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nOpponent wins";
+			}
+			else
+			{
+				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nTie";
+			}
+		}
 	}
 
 	int twoCardLimit = 0;
@@ -61,15 +82,6 @@ public class TriumphLogic : MonoBehaviour
 		}
 	}
 
-	//int fourCardLimit = 0; 
-	//public void setOpponentCards(GameObject card, double cardValue) {
-	//	if (fourCardLimit < 4) {
-	//		opponentCards[fourCardLimit] = card;
-	//		opponentCardValues[fourCardLimit] = cardValue;
-
-	//		fourCardLimit += 1; 
-	//	}
-	//}
 
 	public bool isSelectable() {
 		if (twoCardLimit >= 2)
@@ -96,17 +108,6 @@ public class TriumphLogic : MonoBehaviour
 		opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
 		print(opponentBestValue);
 
-			if (playerHandResult > opponentBestValue)
-			{
-				print("Player wins");
-			}
-			else if (opponentBestValue > playerHandResult)
-			{
-				print("Opponent wins");
-			}
-			else {
-				print("tie btwn " + opponentBestValue + "and player " + playerHandResult);
-			}
 		
     }
 
@@ -247,7 +248,8 @@ public class TriumphLogic : MonoBehaviour
 			}
 		}
 
-		print("Highest card is at " + opponentCards[firstValLocation] + " and second highest is " + opponentCards[secondValLocation]);
+		//print("Highest card is at " + opponentCards[firstValLocation] + " and second highest is " + opponentCards[secondValLocation]);
+		
 		firstBestOpponentCardPosition = firstValLocation;
 		secondBestOpponentCardPosition = secondValLocation; 
 	}
