@@ -60,8 +60,9 @@ public class TriumphLogic : MonoBehaviour
 	}
 
     // Update is called once per frame
-    void FixedUpdate()
+    void Update()
     {
+        // Player picks cards
 		if (playerCards[0] != null && playerCards[1] != null)
 		{
 			playerHandResult = playerCardValues[0] + playerCardValues[1];
@@ -72,32 +73,16 @@ public class TriumphLogic : MonoBehaviour
 			print("Nothing set");
 		}
 
-
+        // Opponent picks cards
 		if (playerHandResult != -1)
 		{
 			opponentCards[firstBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
 			opponentCards[secondBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
+            opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
 
-			if (playerHandResult > opponentBestValue)
-			{
-                // If player wins round, all played points go to them
-				score.text = "Player: "+ playerHandResult + "\nOpponent: " + opponentBestValue + "\nPlayer wins";
-                playerTotalScore += playerHandResult + opponentBestValue;
-			}
-			else if (opponentBestValue > playerHandResult)
-			{
-                // If opponent wins round, all played points go to them
-				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nOpponent wins";
-                opponentTotalScore += playerHandResult + opponentBestValue;
-			}
-			else
-			{
-                // No points awarded in case of tie
-				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nTie";
-			}
-            // Print current scores
-            score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
-		}
+            EndRound();
+        }
+
 	}
 
 	int twoCardLimit = 0;
@@ -135,8 +120,6 @@ public class TriumphLogic : MonoBehaviour
 
         DealCardsPlayer();
 		DealCardsOpponent();
-
-		opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
 
 	}
 
@@ -320,4 +303,36 @@ public class TriumphLogic : MonoBehaviour
 		return tempValue;
 
 	}
+
+    // Called once cards are played to make calculations
+    void EndRound()
+    {
+        if (playerHandResult > opponentBestValue)
+        {
+            // If player wins round, all played points go to them
+            score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nPlayer wins";
+            playerTotalScore += playerHandResult + opponentBestValue;
+        }
+        else if (opponentBestValue > playerHandResult)
+        {
+            // If opponent wins round, all played points go to them
+            score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nOpponent wins";
+            opponentTotalScore += playerHandResult + opponentBestValue;
+        }
+        else
+        {
+            // No points awarded in case of tie
+            score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nTie";
+        }
+        // Print current scores
+        score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
+
+        // Reset for next round
+        Destroy(playerCards[0]);
+        Destroy(playerCards[1]);
+        Destroy(opponentCards[firstBestOpponentCardPosition]);
+        Destroy(opponentCards[secondBestOpponentCardPosition]);
+        playerHandResult = -1;
+        opponentBestValue = -1;
+    }
 }

@@ -59,25 +59,19 @@ public class UpdateSprite : MonoBehaviour
         if (select.faceUp)
         {
             // If an unselected card in the hand has been selected, set boolean value and raise the card
-            //isSelectable makes sure there are only ever 2 cards raised
-            if (!selected &&triumphLogic.isSelectable())
+            // isSelectable makes sure there are only ever 2 cards raised
+            if (!selected && triumphLogic.isSelectable())
             {
                 selected = true;
                 cardTrans.position = new Vector3(cardTrans.position.x, cardTrans.position.y + 1, cardTrans.position.z);
-				cardValue = select.value; 
-				triumphLogic.setPlayerCards(card, cardValue);
-
-            }
-            // If a selected card is reselected, the card is played
-            else
-            {
-                
+                cardValue = select.value;
+                triumphLogic.setPlayerCards(card, cardValue);
             }
         }
         else
         {
             // If the card on the top of the deck has been selected and there are less than 4 cards in the hand, add it to the hand
-            
+
         }
     }
 }
