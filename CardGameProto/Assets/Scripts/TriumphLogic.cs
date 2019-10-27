@@ -26,14 +26,35 @@ public class TriumphLogic : MonoBehaviour
 	private double[] opponentCardValues = new double[4];
 	private int firstBestOpponentCardPosition, secondBestOpponentCardPosition; //positions of the best cards in opponents current hand
 	private double opponentBestValue;
+    private double opponentTotalScore = 0;
 
 	private double playerHandResult = -1; //initialized to -1 until it gets real values
+    private double playerTotalScore = 0;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        // Loop until the game is won
+        //do
         PlayCards();
+        //while(opponentTotalScore < 200 && playerTotalScore < 200);
+
+        // If player & opponent both meet winning conditions in same round,
+        // compare scores
+        if (opponentTotalScore > 200 && playerTotalScore > 200)
+        {
+            if (opponentTotalScore > playerTotalScore)
+                score.text = "Opponent triumphs!";
+            else if (opponentTotalScore < playerTotalScore)
+                score.text = "Player triumphs!";
+            else
+                score.text = "Tie!";
+        }
+        else if (opponentTotalScore > 200)
+            score.text = "Opponent triumphs!";
+        else if(playerTotalScore > 200)
+            score.text = "Player triumphs!";
 
 		
 	}
@@ -59,16 +80,23 @@ public class TriumphLogic : MonoBehaviour
 
 			if (playerHandResult > opponentBestValue)
 			{
+                // If player wins round, all played points go to them
 				score.text = "Player: "+ playerHandResult + "\nOpponent: " + opponentBestValue + "\nPlayer wins";
+                playerTotalScore += playerHandResult + opponentBestValue;
 			}
 			else if (opponentBestValue > playerHandResult)
 			{
+                // If opponent wins round, all played points go to them
 				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nOpponent wins";
+                opponentTotalScore += playerHandResult + opponentBestValue;
 			}
 			else
 			{
+                // No points awarded in case of tie
 				score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nTie";
 			}
+            // Print current scores
+            score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
 		}
 	}
 
