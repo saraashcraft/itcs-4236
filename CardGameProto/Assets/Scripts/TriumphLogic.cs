@@ -31,6 +31,9 @@ public class TriumphLogic : MonoBehaviour
 	private double playerHandResult = -1; //initialized to -1 until it gets real values
     private double playerTotalScore = 0;
 
+    private int cardsInPlayerHand = 0;
+    private int cardsInOpponentHand = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -38,7 +41,7 @@ public class TriumphLogic : MonoBehaviour
         // Loop until the game is won
         //do
         PlayCards();
-        //while(opponentTotalScore < 200 && playerTotalScore < 200);
+        //while(opponentTotalScore < 200 && playerTotalScore < 200){
 
         // If player & opponent both meet winning conditions in same round,
         // compare scores
@@ -53,9 +56,9 @@ public class TriumphLogic : MonoBehaviour
         }
         else if (opponentTotalScore > 200)
             score.text = "Opponent triumphs!";
-        else if(playerTotalScore > 200)
+        else if (playerTotalScore > 200)
             score.text = "Player triumphs!";
-
+    //}
 		
 	}
 
@@ -153,7 +156,7 @@ public class TriumphLogic : MonoBehaviour
         float yOffset = -2.5f;
 
         Vector3 originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-        int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck.
+        //if <4, put onto player's hand, otherwise, stay in deck.
 
 
         foreach (string card in deck) {
@@ -161,14 +164,14 @@ public class TriumphLogic : MonoBehaviour
             GameObject newCard;
 
 
-            if (drawFour < 4)
+            if (cardsInPlayerHand < 4)
             {
                 newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z + 1000), Quaternion.identity);
                 newCard.name = card;
 
                 newCard.GetComponent<Select>().faceUp = true;
                 xOffset += 2f;
-                drawFour++;
+                cardsInPlayerHand++;
             }
             else {
                 xOffset = 0f;
@@ -189,7 +192,7 @@ public class TriumphLogic : MonoBehaviour
 		float yOffset = 10f;
 
 		Vector3 originalPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z);
-		int drawFour = 0; //if <4, put onto player's hand, otherwise, stay in deck.
+		//if <4, put onto player's hand, otherwise, stay in deck.
 
 		foreach (string card in opponentDeck)
 		{
@@ -198,7 +201,7 @@ public class TriumphLogic : MonoBehaviour
 
 			OpponentSelect opponentSelect = GetComponent<OpponentSelect>();
 
-			if (drawFour < 4)
+			if (cardsInOpponentHand < 4)
 			{
 				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
 				newCard.name = card;
@@ -206,14 +209,14 @@ public class TriumphLogic : MonoBehaviour
 				newCard.GetComponent<OpponentSelect>().faceUp = false; //set to false for the opponent so the player can't see the cards. set to true to debug
 				xOffset += 2f;
 
-				opponentCards[drawFour] = newCard;
+				opponentCards[cardsInOpponentHand] = newCard;
 				//	opponentCardValues[drawFour] = opponentSelect.separateSuitAndValue(newCard.name[1]);
 
-				opponentCardValues[drawFour] = returnCardValue(newCard.name);
+				opponentCardValues[cardsInOpponentHand] = returnCardValue(newCard.name);
 					//print("card val: " + opponentCardValues[drawFour]);
 				//	print(opponentCardValues[drawFour]);
 
-				drawFour++;
+				cardsInOpponentHand++;
 			}
 			else
 			{
@@ -228,7 +231,7 @@ public class TriumphLogic : MonoBehaviour
 
 			}
 
-			if (drawFour == 4) {
+			if (cardsInOpponentHand == 4) {
 				bestValue(); 
 			}
 		}
@@ -328,8 +331,12 @@ public class TriumphLogic : MonoBehaviour
         score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
 
         // Reset for next round
+        cardsInPlayerHand--;
+        cardsInPlayerHand--;
         Destroy(playerCards[0]);
         Destroy(playerCards[1]);
+        cardsInOpponentHand--;
+        cardsInOpponentHand--;
         Destroy(opponentCards[firstBestOpponentCardPosition]);
         Destroy(opponentCards[secondBestOpponentCardPosition]);
         playerHandResult = -1;

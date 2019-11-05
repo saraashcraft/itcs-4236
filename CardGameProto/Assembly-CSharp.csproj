@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Hand.cs" />
     <Compile Include="Assets\Scripts\OpponentSelect.cs" />
     <Compile Include="Assets\Scripts\Select.cs" />
     <Compile Include="Assets\Scripts\TriumphLogic.cs" />
