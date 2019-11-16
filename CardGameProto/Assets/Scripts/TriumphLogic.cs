@@ -10,14 +10,11 @@ public class TriumphLogic : MonoBehaviour
 	public Text score;
 
     public Sprite[] cardFaces;
-    public GameObject cardPrefab;
+    
 	public GameObject opponentPrefab; //for the opponent's cards
 
-    public static string[] suits = new string[] { "C", "D", "H", "S" };
-    public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
-
-    public List<string> deck;
-	public List<string> opponentDeck;
+    public Deck deck;
+	public Deck opponentDeck;
 
 	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
 	private double[] playerCardValues = new double[2]; //parallel array that holds the values of the cards - couldn't access values. because the player choses their values, they only need an array of 2
@@ -116,39 +113,12 @@ public class TriumphLogic : MonoBehaviour
      * Main method where most functions will be called - creates/shuffles deck for both player and opponent
      */
     public void PlayCards() {
-        deck = GenerateDeck();
-		Shuffle(deck);
-		opponentDeck = GenerateDeck(); 
-		Shuffle(opponentDeck);
-
+        deck = new Deck();
+		opponentDeck = new Deck(); 
         DealCardsPlayer();
 		DealCardsOpponent();
 
 	}
-
-	public static List<string> GenerateDeck() {
-        List<string> newDeck = new List<string>();
-        foreach (string s in suits) {
-            foreach (string v in values) {
-                newDeck.Add(s + v);
-            }
-        }
-
-        return newDeck;
-    }
-
-    void Shuffle<T>(List<T> list) {
-        System.Random random = new System.Random();
-        int n = list.Count;
-        while (n > 1) {
-            int k = random.Next(n);
-            n--;
-
-            T temp = list[k];
-            list[k] = list[n];
-            list[n] = temp;
-        }
-    }
 
     void DealCardsPlayer() {
         //used to offset the dealt cards
