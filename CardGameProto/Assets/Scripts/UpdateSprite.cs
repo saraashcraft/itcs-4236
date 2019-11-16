@@ -33,7 +33,7 @@ public class UpdateSprite : MonoBehaviour
             }
             i++; 
         }
-        
+        spriteRenderer = card.GetComponent<SpriteRenderer>();
         select = GetComponent<Select>();
 		opponentSelect = GetComponent<OpponentSelect>(); 
     }
