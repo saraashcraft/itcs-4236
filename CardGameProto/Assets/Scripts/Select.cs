@@ -43,6 +43,10 @@ public class Select : MonoBehaviour
 		{
 			value = 1;
 		}
+        else if (tempName[1] == '1')
+        {
+            value = 10;
+        }
 		else {
 			value = char.GetNumericValue(tempName[1]);
 		}

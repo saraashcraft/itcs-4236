@@ -21,6 +21,7 @@ public class TriumphLogic : MonoBehaviour
     public List<string> deck;
 	public List<string> opponentDeck;
 
+    List<GameObject> opponentDeckObjects = new List<GameObject>();
 	private GameObject[] playerCards = new GameObject[2]; //needs to be private - otherwise, initializes to 0 because unity has it as a public property set outside in the inspector
 	private double[] playerCardValues = new double[2]; //parallel array that holds the values of the cards - couldn't access values. because the player choses their values, they only need an array of 2
 
@@ -37,6 +38,7 @@ public class TriumphLogic : MonoBehaviour
     private int cardsInOpponentHand = 0;
 
     private Vector3[] positions = new Vector3[4];
+    private Vector3[] opponentPositions = new Vector3[4];
 
     // Start is called before the first frame update
     void Start()
@@ -51,6 +53,7 @@ public class TriumphLogic : MonoBehaviour
         if(cardsInPlayerHand < 4)
         {
             hand.Add(cards[cards.Count - 1]);
+            cardsInPlayerHand++;
             cards.Remove(cards[cards.Count - 1]);
             cards.TrimExcess();
 
@@ -60,6 +63,19 @@ public class TriumphLogic : MonoBehaviour
                 card.transform.position = positions[i];
                 card.GetComponent<Select>().faceUp = true;
                 i++;
+            }
+        }
+
+        // Check for opponent redeal
+        if(cardsInOpponentHand < 4)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                if(opponentCards[i] == null)
+                {
+                    opponentCards[i] = opponentDeckObjects[opponentDeckObjects.Count - 1];
+                    opponentDeckObjects.Remove(opponentDeckObjects[opponentDeckObjects.Count - 1]);
+                }
             }
         }
 
@@ -204,7 +220,9 @@ public class TriumphLogic : MonoBehaviour
 
 			if (cardsInOpponentHand < 4)
 			{
-				newCard = Instantiate(opponentPrefab, new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000), Quaternion.identity);
+                opponentPositions[cardsInOpponentHand] = new Vector3(transform.position.x + xOffset, transform.position.y + yOffset, transform.position.z + 1000);
+
+                newCard = Instantiate(opponentPrefab, opponentPositions[cardsInOpponentHand], Quaternion.identity);
 				newCard.name = card;
 
 				newCard.GetComponent<OpponentSelect>().faceUp = false; //set to false for the opponent so the player can't see the cards. set to true to debug
@@ -230,6 +248,7 @@ public class TriumphLogic : MonoBehaviour
 
 				newCard.GetComponent<OpponentSelect>().faceUp = false;
 
+                opponentDeckObjects.Add(newCard);
 			}
 
 			if (cardsInOpponentHand == 4) {
