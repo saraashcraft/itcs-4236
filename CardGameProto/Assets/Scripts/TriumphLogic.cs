@@ -40,6 +40,9 @@ public class TriumphLogic : MonoBehaviour
     private Vector3[] positions = new Vector3[4];
     private Vector3[] opponentPositions = new Vector3[4];
 
+    private double lowestKnownValue = 13;
+    private double highestKnownValue = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -84,6 +87,24 @@ public class TriumphLogic : MonoBehaviour
         // Player picks cards
 		if (playerCards[0] != null && playerCards[1] != null)
 		{
+            // Adjust AI's known values
+            if (playerCardValues[0] < lowestKnownValue)
+            {
+                lowestKnownValue = playerCardValues[0];
+            }
+            if(playerCardValues[1] < lowestKnownValue)
+            {
+                lowestKnownValue = playerCardValues[1];
+            }
+            if(playerCardValues[0] > highestKnownValue)
+            {
+                highestKnownValue = playerCardValues[0];
+            }
+            if(playerCardValues[1] > highestKnownValue)
+            {
+                highestKnownValue = playerCardValues[1];
+            }
+
 			playerHandResult = playerCardValues[0] + playerCardValues[1];
 			print("Cards in play: " + playerCardValues[0] + " " + playerCardValues[1]);
 		}
@@ -264,6 +285,8 @@ public class TriumphLogic : MonoBehaviour
     Short decision-making function to decide for which cards the AI will play
          */
 	void bestValue() {
+        // TODO: Add AI functionality to this method
+
 		double firstBestValue = opponentCardValues[0];
 		double secondBestValue = -1;
 
@@ -350,13 +373,14 @@ public class TriumphLogic : MonoBehaviour
             // No points awarded in case of tie
             score.text = "Player: " + playerHandResult + "\nOpponent: " + opponentBestValue + "\nTie";
         }
+
         // Print current scores
         score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
 
         // Check winning conditions
         // If player & opponent both meet winning conditions in same round,
         // compare scores
-        if (opponentTotalScore > 200 && playerTotalScore > 200)
+        if (opponentTotalScore > 100 && playerTotalScore > 100)
         {
             if (opponentTotalScore > playerTotalScore)
                 score.text = "Opponent triumphs!";
@@ -365,9 +389,9 @@ public class TriumphLogic : MonoBehaviour
             else
                 score.text = "Tie!";
         }
-        else if (opponentTotalScore > 200)
+        else if (opponentTotalScore > 100)
             score.text = "Opponent triumphs!";
-        else if (playerTotalScore > 200)
+        else if (playerTotalScore > 100)
             score.text = "Player triumphs!";
 
         // Reset for next round
