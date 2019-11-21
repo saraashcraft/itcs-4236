@@ -75,6 +75,8 @@ public class TriumphLogic : MonoBehaviour
                 {
                     opponentCards[i] = opponentDeckObjects[opponentDeckObjects.Count - 1];
                     opponentDeckObjects.Remove(opponentDeckObjects[opponentDeckObjects.Count - 1]);
+                    opponentCards[i].transform.position = opponentPositions[i];
+                    opponentCardValues[i] = returnCardValue(opponentCards[i].name);
                 }
             }
         }
@@ -93,6 +95,7 @@ public class TriumphLogic : MonoBehaviour
         // Opponent picks cards
 		if (playerHandResult != -1)
 		{
+            bestValue();
 			opponentCards[firstBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
 			opponentCards[secondBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
             opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
