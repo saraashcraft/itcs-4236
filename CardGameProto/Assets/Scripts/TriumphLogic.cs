@@ -16,6 +16,8 @@ public class TriumphLogic : MonoBehaviour
     public static string[] suits = new string[] { "C", "D", "H", "S" };
     public static string[] values = new string[] { "A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K" };
 
+    public List<GameObject> hand = new List<GameObject>();
+    public List<GameObject> cards = new List<GameObject>();
     public List<string> deck;
 	public List<string> opponentDeck;
 
@@ -34,6 +36,7 @@ public class TriumphLogic : MonoBehaviour
     private int cardsInPlayerHand = 0;
     private int cardsInOpponentHand = 0;
 
+    private Vector3[] positions = new Vector3[4];
 
     // Start is called before the first frame update
     void Start()
@@ -47,8 +50,17 @@ public class TriumphLogic : MonoBehaviour
         // Check for redeal
         if(cardsInPlayerHand < 4)
         {
-            DealCardsPlayer();
-            DealCardsOpponent();
+            hand.Add(cards[cards.Count - 1]);
+            cards.Remove(cards[cards.Count - 1]);
+            cards.TrimExcess();
+
+            // Rearrange cards
+            int i = 0;
+            foreach (GameObject card in hand) {
+                card.transform.position = positions[i];
+                card.GetComponent<Select>().faceUp = true;
+                i++;
+            }
         }
 
         // Player picks cards
@@ -152,12 +164,14 @@ public class TriumphLogic : MonoBehaviour
 
             if (cardsInPlayerHand < 4)
             {
-                newCard = Instantiate(cardPrefab, new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z + 1000), Quaternion.identity);
+                positions[cardsInPlayerHand] = new Vector3(transform.position.x + xOffset, transform.position.y - yOffset, transform.position.z + 1000);
+                newCard = Instantiate(cardPrefab, positions[cardsInPlayerHand], Quaternion.identity);
                 newCard.name = card;
 
                 newCard.GetComponent<Select>().faceUp = true;
                 xOffset += 2f;
                 cardsInPlayerHand++;
+                hand.Add(newCard);
             }
             else {
                 xOffset = 0f;
@@ -168,6 +182,7 @@ public class TriumphLogic : MonoBehaviour
 
 
                 newCard.GetComponent<Select>().faceUp = false;
+                cards.Add(newCard);
             }
         }
     }
@@ -336,6 +351,9 @@ public class TriumphLogic : MonoBehaviour
         // Reset for next round
         cardsInPlayerHand--;
         cardsInPlayerHand--;
+        hand.Remove(playerCards[0]);
+        hand.Remove(playerCards[1]);
+        hand.TrimExcess();
         Destroy(playerCards[0]);
         Destroy(playerCards[1]);
         cardsInOpponentHand--;
