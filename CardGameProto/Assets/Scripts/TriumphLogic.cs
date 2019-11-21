@@ -38,33 +38,19 @@ public class TriumphLogic : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // Loop until the game is won
-        //do
         PlayCards();
-        //while(opponentTotalScore < 200 && playerTotalScore < 200){
-
-        // If player & opponent both meet winning conditions in same round,
-        // compare scores
-        if (opponentTotalScore > 200 && playerTotalScore > 200)
-        {
-            if (opponentTotalScore > playerTotalScore)
-                score.text = "Opponent triumphs!";
-            else if (opponentTotalScore < playerTotalScore)
-                score.text = "Player triumphs!";
-            else
-                score.text = "Tie!";
-        }
-        else if (opponentTotalScore > 200)
-            score.text = "Opponent triumphs!";
-        else if (playerTotalScore > 200)
-            score.text = "Player triumphs!";
-    //}
-		
 	}
 
     // Update is called once per frame
     void Update()
     {
+        // Check for redeal
+        if(cardsInPlayerHand < 4)
+        {
+            DealCardsPlayer();
+            DealCardsOpponent();
+        }
+
         // Player picks cards
 		if (playerCards[0] != null && playerCards[1] != null)
 		{
@@ -330,6 +316,23 @@ public class TriumphLogic : MonoBehaviour
         // Print current scores
         score.text += "\n\nPlayer Total: " + playerTotalScore + "\nOpponent Total: " + opponentTotalScore;
 
+        // Check winning conditions
+        // If player & opponent both meet winning conditions in same round,
+        // compare scores
+        if (opponentTotalScore > 200 && playerTotalScore > 200)
+        {
+            if (opponentTotalScore > playerTotalScore)
+                score.text = "Opponent triumphs!";
+            else if (opponentTotalScore < playerTotalScore)
+                score.text = "Player triumphs!";
+            else
+                score.text = "Tie!";
+        }
+        else if (opponentTotalScore > 200)
+            score.text = "Opponent triumphs!";
+        else if (playerTotalScore > 200)
+            score.text = "Player triumphs!";
+
         // Reset for next round
         cardsInPlayerHand--;
         cardsInPlayerHand--;
@@ -341,5 +344,6 @@ public class TriumphLogic : MonoBehaviour
         Destroy(opponentCards[secondBestOpponentCardPosition]);
         playerHandResult = -1;
         opponentBestValue = -1;
+        twoCardLimit = 0;
     }
 }
