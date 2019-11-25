@@ -13,7 +13,7 @@ public class UpdateSprite : MonoBehaviour
 	private OpponentSelect opponentSelect;
 
     private TriumphLogic triumphLogic;
-    [SerializeField] private Transform cardTrans;
+    [SerializeField] public Transform cardTrans;
 	[SerializeField] public GameObject card;
 
     private bool selected = false;
@@ -67,11 +67,6 @@ public class UpdateSprite : MonoBehaviour
                 cardValue = select.value;
                 triumphLogic.setPlayerCards(card, cardValue);
             }
-        }
-        else
-        {
-            // If the card on the top of the deck has been selected and there are less than 4 cards in the hand, add it to the hand
-
         }
     }
 }

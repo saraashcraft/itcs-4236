@@ -43,6 +43,8 @@ public class TriumphLogic : MonoBehaviour
     private double lowestKnownValue = 13;
     private double highestKnownValue = 0;
 
+    private int wait = 0;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -121,7 +123,13 @@ public class TriumphLogic : MonoBehaviour
 			opponentCards[secondBestOpponentCardPosition].GetComponent<OpponentSelect>().faceUp = true;
             opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
 
-            EndRound();
+            // Wait so player has time to see what opponent played
+            if (wait > 100)
+            {
+                EndRound();
+                wait = 0;
+            }
+            wait++;
         }
 
 	}
@@ -157,7 +165,7 @@ public class TriumphLogic : MonoBehaviour
         deck = GenerateDeck();
 		Shuffle(deck);
 		opponentDeck = GenerateDeck(); 
-		Shuffle(opponentDeck);
+		ShuffleBackward(opponentDeck);
 
         DealCardsPlayer();
 		DealCardsOpponent();
@@ -185,6 +193,21 @@ public class TriumphLogic : MonoBehaviour
             T temp = list[k];
             list[k] = list[n];
             list[n] = temp;
+        }
+    }
+
+    void ShuffleBackward<T>(List<T> list)
+    {
+        System.Random random = new System.Random();
+        int n = 0;
+        while (n < list.Count)
+        {
+            int k = random.Next(n);
+
+            T temp = list[k];
+            list[k] = list[n];
+            list[n] = temp;
+            n++;
         }
     }
 
@@ -285,29 +308,40 @@ public class TriumphLogic : MonoBehaviour
     Short decision-making function to decide for which cards the AI will play
          */
 	void bestValue() {
-        // TODO: Add AI functionality to this method
-
-		double firstBestValue = opponentCardValues[0];
+        double firstBestValue = opponentCardValues[0];
 		double secondBestValue = -1;
 
 		int firstValLocation = 0;
 		int secondValLocation = 0 ;
 
+        // Pick first card
 		for (int i = 0; i < 4; i++) {
-			if (opponentCardValues[i] > firstBestValue) {
+			if (opponentCardValues[i] > firstBestValue && opponentCardValues[i] > lowestKnownValue && opponentCardValues[i] < highestKnownValue) {
 				firstBestValue = opponentCardValues[i];
 				firstValLocation = i; 
 			}
 		}
 
+        // Pick second card
 		for (int i = 0; i < 4; i++) {
 			if (i != firstValLocation) {
-				if (opponentCardValues[i] > secondBestValue) {
+				if (opponentCardValues[i] > secondBestValue && opponentCardValues[i] > lowestKnownValue && opponentCardValues[i] < highestKnownValue) {
 					secondBestValue = opponentCardValues[i];
 					secondValLocation = i; 
 				}
 			}
 		}
+
+        // If only one card was picked because of the parameters, (generally only happens in first round)
+        // then choose another card
+        if(opponentCards[firstValLocation] == opponentCards[secondValLocation])
+        {
+            for(int i = 0; i < 4; i++)
+            {
+                if (opponentCardValues[i] > opponentCardValues[secondValLocation])
+                    secondValLocation = i;
+            }
+        }
 
 		//print("Highest card is at " + opponentCards[firstValLocation] + " and second highest is " + opponentCards[secondValLocation]);
 		
@@ -380,7 +414,7 @@ public class TriumphLogic : MonoBehaviour
         // Check winning conditions
         // If player & opponent both meet winning conditions in same round,
         // compare scores
-        if (opponentTotalScore > 100 && playerTotalScore > 100)
+        if (opponentTotalScore > 200 && playerTotalScore > 200)
         {
             if (opponentTotalScore > playerTotalScore)
                 score.text = "Opponent triumphs!";
@@ -389,10 +423,20 @@ public class TriumphLogic : MonoBehaviour
             else
                 score.text = "Tie!";
         }
-        else if (opponentTotalScore > 100)
+        else if (opponentTotalScore > 200)
             score.text = "Opponent triumphs!";
-        else if (playerTotalScore > 100)
+        else if (playerTotalScore > 200)
             score.text = "Player triumphs!";
+        else if(opponentDeckObjects.Count == 0 && cards.Count == 0)
+        {
+            if (opponentTotalScore > playerTotalScore)
+                score.text = "Opponent triumphs!";
+            else if (opponentTotalScore < playerTotalScore)
+                score.text = "Player triumphs!";
+            else
+                score.text = "Tie!";
+
+        }
 
         // Reset for next round
         cardsInPlayerHand--;
