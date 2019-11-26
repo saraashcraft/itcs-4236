@@ -267,7 +267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardFace: {fileID: 0}
-  cardBack: {fileID: 21300000, guid: d243c762acccc4addab0b5317798a15f, type: 3}
+  cardBack: {fileID: 21300000, guid: e5150e28c81b54078ba9c58083edfb0a, type: 3}
   cardTrans: {fileID: 150662582}
   card: {fileID: 150662577}
   cardValue: 0
@@ -367,7 +367,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -392, y: -17}
+  m_AnchoredPosition: {x: -297, y: -0.0000038147}
   m_SizeDelta: {x: 293.4, y: 150}
   m_Pivot: {x: 0.5, y: 0.49999997}
 --- !u!114 &453630638
@@ -391,7 +391,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, Unity.ugui,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_Font: {fileID: 12800000, guid: bee27166b08e94942a3e040be486a604, type: 3}
     m_FontSize: 20
     m_FontStyle: 0
     m_BestFit: 1
@@ -448,7 +448,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.20252381, g: 0.4745098, b: 0.19215688, a: 0}
+  m_BackGroundColor: {r: 0.25882354, g: 0.49019608, b: 0.5647059, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -701,9 +701,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: aaa2334e134a146ed871bf7d76e6e117, type: 3}
   - {fileID: 21300000, guid: cfd0cd80f011d4446b0a61c435cef077, type: 3}
   - {fileID: 21300000, guid: 72beb39d65da944808df9859c8fc9668, type: 3}
-  - {fileID: 21300000, guid: f7eeb2e07099e48cfa737cf77785001c, type: 3}
-  - {fileID: 21300000, guid: 679a3bb51c1ee45679efdcfacb7fbc62, type: 3}
-  - {fileID: 21300000, guid: 8cc75996779184fabae5dacc221ca038, type: 3}
+  - {fileID: 21300000, guid: 741519b3fc2ec47cf89dd6b2ef55a3f0, type: 3}
+  - {fileID: 21300000, guid: ee7ce52f389684824ad5d10e9de6c818, type: 3}
+  - {fileID: 21300000, guid: 1b055339533974441887043bb6f3c908, type: 3}
   - {fileID: 21300000, guid: 22625387bc163462c88843472293a24b, type: 3}
   - {fileID: 21300000, guid: 03b5a698022d244219b1b03657bf7eb2, type: 3}
   - {fileID: 21300000, guid: 6d4d482bb189547ff8c63d01b9e349b1, type: 3}
@@ -714,9 +714,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: bebd77277326f45e5b227053c37bfde7, type: 3}
   - {fileID: 21300000, guid: 06907b344593e4f1e9c3687c67fe8629, type: 3}
   - {fileID: 21300000, guid: 3eca7dec5fe9c4352a72c45245492e89, type: 3}
-  - {fileID: 21300000, guid: 6e0b47695ba134e469ee0a77cb317c86, type: 3}
-  - {fileID: 21300000, guid: 44151ead3b72b40efb1a75b859bc055f, type: 3}
-  - {fileID: 21300000, guid: 8499f145bd8ef4e02be8388e1a0c1154, type: 3}
+  - {fileID: 21300000, guid: 35639467a74064c8eba40e0236115216, type: 3}
+  - {fileID: 21300000, guid: 89a6b3fad98bf411aa1cec3a811d580a, type: 3}
+  - {fileID: 21300000, guid: e82c6646622c649cb8aca38fb29f1f0f, type: 3}
   - {fileID: 21300000, guid: 51eafab1989154b379b9ab2432980cbb, type: 3}
   - {fileID: 21300000, guid: 3780ac48eff1a4cd7b163972bb2e521a, type: 3}
   - {fileID: 21300000, guid: 3bae3b2f3f8264e1fa17de79f3cf30ac, type: 3}
@@ -727,9 +727,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: d9d2a2ef69eec4164950f08a87496181, type: 3}
   - {fileID: 21300000, guid: 950e37daa1e044acb9e171bb4fd3ab61, type: 3}
   - {fileID: 21300000, guid: 089d004346b8c4c85840d931b4cac38b, type: 3}
-  - {fileID: 21300000, guid: 1281213af750a44c295fce3b7eed822b, type: 3}
-  - {fileID: 21300000, guid: 29b63849b35de4e0e9954ca3a4f740c3, type: 3}
-  - {fileID: 21300000, guid: ee726cd89f77f402e8c83af27dca2ca1, type: 3}
+  - {fileID: 21300000, guid: cacdca51a73c64eb798d8cb4d7c68bf0, type: 3}
+  - {fileID: 21300000, guid: fb30d106ee6864f51bd1be31369f7b19, type: 3}
+  - {fileID: 21300000, guid: 33da27855b0154a51b6656e6d60a6c10, type: 3}
   - {fileID: 21300000, guid: 1f96dc98811904bc99cf06f64b4f6f53, type: 3}
   - {fileID: 21300000, guid: 858470d0c125c4a8893e442d180d1268, type: 3}
   - {fileID: 21300000, guid: deafbe5c7292b46608ea4be39c1ea92d, type: 3}
@@ -740,11 +740,13 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 276a42d547df9467eaf6785bc49ad69a, type: 3}
   - {fileID: 21300000, guid: ce95664d5efb440038b77ae5ae5c2d4f, type: 3}
   - {fileID: 21300000, guid: 302e8ea33c93344ca97fb59b96f13ab2, type: 3}
-  - {fileID: 21300000, guid: caea55f1fe3ca4136a587d11b730ca9c, type: 3}
-  - {fileID: 21300000, guid: f4fc7465ce456464cbbe14a45e32c1b1, type: 3}
-  - {fileID: 21300000, guid: 125b36160258b4cdabf9d4a5dfd29e60, type: 3}
+  - {fileID: 21300000, guid: 76652eea688e5471dbd825fce68eb19b, type: 3}
+  - {fileID: 21300000, guid: 09d27aee799884d8e90c6ff916c5ea3e, type: 3}
+  - {fileID: 21300000, guid: 7096d6260a7c44f2fb391ea10aa77d84, type: 3}
   cardPrefab: {fileID: 150662577}
   opponentPrefab: {fileID: 1502626886}
+  hand: []
+  cards: []
   deck: []
   opponentDeck: []
 --- !u!4 &1387370754
@@ -810,7 +812,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardFace: {fileID: 0}
-  cardBack: {fileID: 21300000, guid: d243c762acccc4addab0b5317798a15f, type: 3}
+  cardBack: {fileID: 21300000, guid: e5150e28c81b54078ba9c58083edfb0a, type: 3}
   cardTrans: {fileID: 1502626892}
   card: {fileID: 1502626886}
   cardValue: 0
