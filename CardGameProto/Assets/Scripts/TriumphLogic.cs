@@ -124,7 +124,7 @@ public class TriumphLogic : MonoBehaviour
             opponentBestValue = opponentCardValues[firstBestOpponentCardPosition] + opponentCardValues[secondBestOpponentCardPosition];
 
             // Wait so player has time to see what opponent played
-            if (wait > 100)
+            if (wait > 50)
             {
                 EndRound();
                 wait = 0;
@@ -414,7 +414,7 @@ public class TriumphLogic : MonoBehaviour
         // Check winning conditions
         // If player & opponent both meet winning conditions in same round,
         // compare scores
-        if (opponentTotalScore > 200 && playerTotalScore > 200)
+        if (opponentTotalScore > 150 && playerTotalScore > 150)
         {
             if (opponentTotalScore > playerTotalScore)
                 score.text = "Opponent triumphs!";
@@ -423,9 +423,9 @@ public class TriumphLogic : MonoBehaviour
             else
                 score.text = "Tie!";
         }
-        else if (opponentTotalScore > 200)
+        else if (opponentTotalScore > 150)
             score.text = "Opponent triumphs!";
-        else if (playerTotalScore > 200)
+        else if (playerTotalScore > 150)
             score.text = "Player triumphs!";
         else if(opponentDeckObjects.Count == 0 && cards.Count == 0)
         {
