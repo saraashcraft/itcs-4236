@@ -62,7 +62,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\MainMenu.cs" />
     <Compile Include="Assets\Scripts\OpponentSelect.cs" />
+    <Compile Include="Assets\Scripts\RulesMenu.cs" />
     <Compile Include="Assets\Scripts\Select.cs" />
     <Compile Include="Assets\Scripts\TriumphLogic.cs" />
     <Compile Include="Assets\Scripts\UpdateSprite.cs" />
